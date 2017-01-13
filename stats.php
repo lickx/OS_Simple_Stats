@@ -31,16 +31,24 @@ $color = "red";
 $mysqli = new mysqli($host,$user,$pass,$dbname);
 $presenceuseraccount = 0;
 $preshguser = 0;
-if ($pres = $mysqli->query("SELECT * FROM Presence")) {
+$monthago = time() - 2592000;
+$lastmonth = time() - 2419200;
+if ($pres = $mysqli->query("SELECT * FROM GridUser")) {
 	while ($presrow = $pres->fetch_array()) {
-		if ($luser = $mysqli->query("SELECT * FROM UserAccounts WHERE PrincipalID = '".$presrow['UserID']."'")) {
+		if ($luser = $mysqli->query("
+    SELECT UserID, Login
+ 	WHERE UserID LIKE '%http%'
+	AND Login < ".lastmonth."")) 
+	
+	{
 			++$presenceuseraccount;
 		}else{
 			++$preshguser;
 		}
 	}
 }
-$monthago = time() - 2592000;
+
+
 $pastmonth = 0;
 if ($tpres = $mysqli->query("SELECT * FROM GridUser WHERE Logout < '".$monthago."'")) {
 	$pastmonth = $tpres->num_rows;
@@ -65,15 +73,15 @@ if($regiondb = $mysqli->query("SELECT * FROM regions")) {
 		$totalsize += $rsize;
 	}
 }
-$arr = ['GridStatus' => '<b><font color="'.$color.'">'.$gstatus.'</b></font>',
+$arr = ['GridStatus' => '<b><font color="'.$color.'">'.$gstatus.'</b></font><b><font color=orange>'.$betastatus.'</b></font>',
 	'InWorld' => number_format($presenceuseraccount),
-	'HGVisitors' => number_format($preshguser),
-	'MonthLogin' => number_format($pastmonth),
+	'HG Visitors Last 30 Days' => number_format($preshguser),
+	'Local Users Last 30 Days' => number_format($pastmonth),
 	'TotalAccounts' => number_format($totalaccounts),
 	'Regions' => number_format($totalregions),
-	'VarRegions' => number_format($totalvarregions),
-	'SingleRegions' => number_format($totalsingleregions),
-	'TotalLandSize' => number_format($totalsize),
+	'Var Regions' => number_format($totalvarregions),
+	'Single Regions' => number_format($totalsingleregions),
+	'Total LandSize' => number_format($totalsize),
 	'Login URL' => $loginuri,
 	'Website' => '<i><a href='.$website.'>'.$website.'</a></i>',
 	'Login Screen' => '<i><a href='.$loginscreen.'>'.$loginscreen.'</a></i>'];
