@@ -73,18 +73,18 @@ if($regiondb = $mysqli->query("SELECT * FROM regions")) {
 		$totalsize += $rsize;
 	}
 }
-$arr = ['GridStatus' => '<b><font color="'.$color.'">'.$gstatus.'</b></font><b><font color=orange>'.$betastatus.'</b></font>',
+$arr = ['GridStatus' => '<b><font color="'.$color.'">'.$gstatus.'</b></font>',
 	'InWorld' => number_format($presenceuseraccount),
-	'HG Visitors Last 30 Days' => number_format($preshguser),
-	'Local Users Last 30 Days' => number_format($pastmonth),
+	'HG_Visitors_Last_30_Days' => number_format($preshguser),
+	'Local_Users_Last_30_Days' => number_format($pastmonth),
 	'TotalAccounts' => number_format($totalaccounts),
 	'Regions' => number_format($totalregions),
-	'Var Regions' => number_format($totalvarregions),
-	'Single Regions' => number_format($totalsingleregions),
-	'Total LandSize' => number_format($totalsize),
-	'Login URL' => $loginuri,
+	'Var_Regions' => number_format($totalvarregions),
+	'Single_Regions' => number_format($totalsingleregions),
+	'Total_LandSize' => number_format($totalsize),
+	'Login_URL' => $loginuri,
 	'Website' => '<i><a href='.$website.'>'.$website.'</a></i>',
-	'Login Screen' => '<i><a href='.$loginscreen.'>'.$loginscreen.'</a></i>'];
+	'Login_Screen' => '<i><a href='.$loginscreen.'>'.$loginscreen.'</a></i>'];
 	
 if ($_GET['format'] == "json") {
 	header('Content-type: application/json');
