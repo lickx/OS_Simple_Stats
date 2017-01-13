@@ -80,7 +80,7 @@ $arr = ['GridStatus' => '<b><font color="'.$color.'">'.$gstatus.'</b></font>',
 	'Total_LandSize(km2)' => number_format($totalsize),
 	'Login_URL' => $loginuri,
 	'Website' => '<i><a href='.$website.'>'.$website.'</a></i>',
-	'Login Screen' => '<i><a href='.$loginscreen.'>'.$loginscreen.'</a></i>'];
+	'Login_Screen' => '<i><a href='.$loginscreen.'>'.$loginscreen.'</a></i>'];
 	
 if ($_GET['format'] == "json") {
 	header('Content-type: application/json');
