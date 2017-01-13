@@ -30,25 +30,20 @@ $color = "red";
 
 $mysqli = new mysqli($host,$user,$pass,$dbname);
 $presenceuseraccount = 0;
-$preshguser = 0;
-$monthago = time() - 2592000;
-$lastmonth = time() - 2419200;
-if ($pres = $mysqli->query("SELECT DISTINCT * FROM GridUser")) {
-	while ($presrow = $pres->fetch_array()) {
-		if ($luser = $mysqli->query("
-    SELECT DISTINCT UserID, Login
- 	WHERE UserID LIKE '%http%'
-	AND Login < ".lastmonth."")) 
-	
-	{
-			++$presenceuseraccount;
-		}else{
-			++$preshguser;
+
+$monthago = time() - 2592000; 
+
+if ($hguser = $mysqli->query("SELECT UserID, Login FROM GridUser WHERE UserID LIKE '%htt%' AND Login < 'time() - 2592000'")) 
+		{
+			$preshguser= $hguser->num_rows;
 		}
-	}
+	
+
+
+$nowonlinescounter = 0;
+if ($preso = $mysqli->query("SELECT UserID FROM Presence")) {
+	$nowonlinescounter = $preso->num_rows;
 }
-
-
 $pastmonth = 0;
 if ($tpres = $mysqli->query("SELECT DISTINCT * FROM GridUser WHERE Logout < '".$monthago."'")) {
 	$pastmonth = $tpres->num_rows;
@@ -70,21 +65,21 @@ if($regiondb = $mysqli->query("SELECT * FROM regions")) {
 			++$totalvarregions;
 		}
 		$rsize = $regions['sizeX'] * $regions['sizeY'];
-		$totalsize += $rsize;
+		$totalsize += $rsize / 1000;
 	}
 }
 $arr = ['GridStatus' => '<b><font color="'.$color.'">'.$gstatus.'</b></font>',
-	'Users_Currently_Logged_In' => number_format($presenceuseraccount),
-	'Unique_HG_Visitors_Last_30_Days' => number_format($preshguser),
-	'Unique_Local_Users_Last_30_Days' => number_format($pastmonth),
+	'Online_Now' => number_format($nowonlinescounter),
+	'HG_Visitors Last 30 Days' => number_format($preshguser),
+	'Local_Users Last 30 Days' => number_format($pastmonth),
 	'Registered_Users' => number_format($totalaccounts),
 	'Regions' => number_format($totalregions),
 	'Var_Regions' => number_format($totalvarregions),
 	'Single_Regions' => number_format($totalsingleregions),
-	'Total_LandSize(km)' => number_format($totalsize / 1000),
+	'Total_LandSize(km)' => number_format($totalsize),
 	'Login_URL' => $loginuri,
 	'Website' => '<i><a href='.$website.'>'.$website.'</a></i>',
-	'Login_Screen' => '<i><a href='.$loginscreen.'>'.$loginscreen.'</a></i>'];
+	'Login Screen' => '<i><a href='.$loginscreen.'>'.$loginscreen.'</a></i>'];
 	
 if ($_GET['format'] == "json") {
 	header('Content-type: application/json');
