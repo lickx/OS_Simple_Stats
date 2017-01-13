@@ -75,8 +75,8 @@ if($regiondb = $mysqli->query("SELECT * FROM regions")) {
 }
 $arr = ['GridStatus' => '<b><font color="'.$color.'">'.$gstatus.'</b></font>',
 	'Users_Currently_Logged_In' => number_format($presenceuseraccount),
-	'HG_Visitors_Last_30_Days' => number_format($preshguser),
-	'Local_Users_Last_30_Days' => number_format($pastmonth),
+	'Unique_HG_Visitors_Last_30_Days' => number_format($preshguser),
+	'Unique_Local_Users_Last_30_Days' => number_format($pastmonth),
 	'Registered_Users' => number_format($totalaccounts),
 	'Regions' => number_format($totalregions),
 	'Var_Regions' => number_format($totalvarregions),
