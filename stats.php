@@ -100,7 +100,7 @@ if (isset($_GET['format']) && $_GET['format'] == "json") {
     header('Content-type: text/xml');
     print array2xml($arr);
 } else {
-    echo "<!DOCTYPE html>\n<html>\n<head>\n<title>Isthmus - Statistics</title>\n" .
+    echo "<!DOCTYPE html>\n<html>\n<head>\n<title>Mygrid - Statistics</title>\n" .
          "<link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n";
     foreach($arr as $k => $v) {
         echo '<strong>'.$k.': </strong>'.$v."<br>\n";
