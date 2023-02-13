@@ -74,7 +74,7 @@ $arr = ['GridStatus' => $gstatus,
     'Single_Regions' => number_format($totalsingleregions),
     'Total_LandSize(km2)' => number_format($totalsize),
     'Login_URL' => $loginuri,
-    'Avatar_Density' => number_format($avatardensity,2)
+    'Avatar_Density_Now' => number_format($avatardensity,2)
 ];
 
 if (isset($_GET['format']) && $_GET['format'] == "json") {
