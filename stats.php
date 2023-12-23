@@ -29,7 +29,9 @@ $monthago = time() - 2592000;
 
 if ($hguser = $mysqli->query("SELECT UserID, Login FROM GridUser WHERE UserID LIKE '%htt%' AND Login < 'time() - 2592000'")) 
 {
-    $preshguser= $hguser->num_rows;
+    if ($hguser->num_rows > 0)
+        $preshguser = $hguser->num_rows / 2; // /2 because of double entried with a slash suffix
+    else $preshguser = 0;
 }
 
 $nowonlinescounter = 0;
