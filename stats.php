@@ -44,7 +44,7 @@ if ($tpres = $mysqli->query("SELECT DISTINCT * FROM GridUser WHERE UserID NOT LI
 }
 $totalaccounts = 0;
 if ($useraccounts = $mysqli->query("SELECT * FROM UserAccounts")) {
-    $totalaccounts = $useraccounts->num_rows;
+    $totalaccounts = $useraccounts->num_rows - 1;
 }
 $totalregions = 0;
 $totalvarregions = 0;
