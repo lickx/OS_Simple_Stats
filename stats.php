@@ -27,7 +27,7 @@ $presenceuseraccount = 0;
 
 $monthago = time() - 2592000; 
 
-if ($hguser = $mysqli->query("SELECT UserID, Login FROM GridUser WHERE UserID LIKE '%htt%' AND Login < 'time() - 2592000'")) 
+if ($hguser = $mysqli->query("SELECT UserID, Login FROM GridUser WHERE UserID LIKE '%http%' AND Login > UNIX_TIMESTAMP() - 2592000"))
 {
     if ($hguser->num_rows > 0)
         $preshguser = $hguser->num_rows / 2; // /2 because of double entried with a slash suffix
@@ -39,7 +39,7 @@ if ($preso = $mysqli->query("SELECT UserID FROM Presence")) {
     $nowonlinescounter = $preso->num_rows;
 }
 $pastmonth = 0;
-if ($tpres = $mysqli->query("SELECT DISTINCT * FROM GridUser WHERE UserID NOT LIKE '%http%' AND Login < 'time() - 2592000'")) {
+if ($tpres = $mysqli->query("SELECT DISTINCT * FROM GridUser WHERE UserID NOT LIKE '%http%' AND Login > UNIX_TIMESTAMP() - 2592000")) {
     $pastmonth = $tpres->num_rows;
 }
 $totalaccounts = 0;
