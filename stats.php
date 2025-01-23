@@ -52,31 +52,34 @@ $totalsingleregions = 0;
 $totalsize = 0;
 if($regiondb = $mysqli->query("SELECT * FROM regions")) {
     while ($regions = $regiondb->fetch_array()) {
-        ++$totalregions;
         if ($regions['sizeX'] == 256) {
             ++$totalsingleregions;
+            $rsize = $regions['sizeX'] * $regions['sizeY'];
+            $totalsize += $rsize / 1000;
+            ++$totalregions;
         } else {
             ++$totalvarregions;
+            $rsize = $regions['sizeX'] * $regions['sizeY'];
+            $totalsize += $rsize / 1000;
+            $totalregions += ($regions['sizeX'] / 256) * ($regions['sizeY'] / 256);
         }
-        $rsize = $regions['sizeX'] * $regions['sizeY'];
-        $totalsize += $rsize / 1000;
     }
 }
 
-$avatardensity = $nowonlinescounter / $totalsingleregions;
+$avatardensity = $nowonlinescounter / $totalregions;
 
 $arr = ['GridStatus' => $gstatus,
-    'Online_Now' => number_format($nowonlinescounter),
-    'HG_Visitors_Last_30_Days' => number_format($preshguser),
-    'Local_Users_Last_30_Days' => number_format($pastmonth),
-    'Total_Active_Last_30_Days' => number_format($pastmonth + $preshguser),
-    'Registered_Users' => number_format($totalaccounts),
-    'Regions' => number_format($totalregions),
-    'Var_Regions' => number_format($totalvarregions),
-    'Single_Regions' => number_format($totalsingleregions),
-    'Total_LandSize(km2)' => number_format($totalsize),
-    'Login_URL' => $loginuri,
-    'Avatar_Density_Now' => number_format($avatardensity,2)
+    'Online Now' => number_format($nowonlinescounter),
+    'Live avatar density' => number_format($avatardensity,2) . ' avatars per region',
+    'Registered users' => number_format($totalaccounts),
+//    'HG_Visitors_Last_30_Days' => number_format($preshguser),
+//    'Local_Users_Last_30_Days' => number_format($pastmonth),
+    'Standard regions' => number_format($totalregions),
+    'Unique 30-day visitors' => number_format($pastmonth + $preshguser),
+//    'Var regions' => number_format($totalvarregions),
+//    'Single regions' => number_format($totalsingleregions),
+    'Land mass' => number_format($totalsize) . ' km2'
+//    'Login URL' => $loginuri
 ];
 
 if (isset($_GET['format']) && $_GET['format'] == "json") {
